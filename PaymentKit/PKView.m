@@ -308,7 +308,7 @@
 - (BOOL)isValid
 {
     return [self.cardNumber isValid] && [self.cardExpiry isValid] &&
-	[self.cardCVC isValid];
+	[self.cardCVC isValidWithType:self.cardNumber.cardType];
 }
 
 - (PKCard *)card

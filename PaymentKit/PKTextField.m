@@ -12,7 +12,7 @@
 
 @implementation PKTextField
 
-+ (NSString*)textByRemovingUselessSpacesFromString:(NSString*)string {
++ (NSString *)textByRemovingUselessSpacesFromString:(NSString *)string {
     return [string stringByReplacingOccurrencesOfString:kPKTextFieldSpaceChar withString:@""];
 }
 

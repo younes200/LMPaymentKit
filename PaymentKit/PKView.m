@@ -64,21 +64,35 @@
     [self setup];
 }
 
+- (void)setBorderStyle:(UITextBorderStyle)borderStyle
+{
+	_borderStyle = borderStyle;
+	
+	if (borderStyle == UITextBorderStyleRoundedRect) {
+		self.layer.borderColor = [UIColor colorWithRed:191/255.0 green:192/255.0 blue:194/255.0 alpha:1.0].CGColor;
+		self.layer.cornerRadius = 6.0;
+		self.layer.borderWidth = 0.5;
+	}
+	else {
+		self.layer.borderColor = nil;
+		self.layer.cornerRadius = 0.0;
+		self.layer.borderWidth = 0.0;
+	}
+}
+
 - (void)setup
 {
+	self.borderStyle = UITextBorderStyleRoundedRect;
+	self.layer.masksToBounds = YES;
+	self.backgroundColor = [UIColor whiteColor];
+	
     isInitialState = YES;
     isValidState   = NO;
-    
-    self.layer.borderColor = [UIColor colorWithRed:191/255.0 green:192/255.0 blue:194/255.0 alpha:1.0].CGColor;
-	self.layer.cornerRadius = 6.0;
-	self.layer.borderWidth = 0.5;
-	self.layer.masksToBounds = YES;
     
     [self setupPlaceholderView];
 	
 	self.innerView = [[UIView alloc] initWithFrame:CGRectMake(_placeholderView.frame.size.width, 0, self.frame.size.width - _placeholderView.frame.size.width, self.frame.size.height)];
     self.innerView.clipsToBounds = YES;
-	self.backgroundColor = [UIColor whiteColor];
 	
 	_cardLastFourField = [[UITextField alloc] initWithFrame:CGRectZero];
 	_cardLastFourField.font = kPKDefaultBoldFont;
@@ -102,11 +116,8 @@
 
 - (void)setupPlaceholderView
 {
-	CGFloat y = (self.frame.size.height - 32) / 2;
-	
-    _placeholderView = [[UIImageView alloc] initWithFrame:CGRectMake(0, y, 51, 32)];
+    _placeholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder"]];
     _placeholderView.backgroundColor = [UIColor clearColor];
-    _placeholderView.image = [UIImage imageNamed:@"placeholder"];
 }
 
 - (PKTextField *)textFieldWithPlaceholder:(NSString *)placeholder
@@ -169,6 +180,8 @@
 
 - (void)layoutSubviews
 {
+	_placeholderView.frame = CGRectMake(0, (self.frame.size.height - 32) / 2, 51, 32);
+	
 	NSDictionary *attributes = @{NSFontAttributeName:kPKDefaultBoldFont};
 	
 	CGSize lastGroupSize, cvcSize, cardNumberSize;

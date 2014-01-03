@@ -118,7 +118,6 @@
 - (void)setupPlaceholderView
 {
     _placeholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder"]];
-    _placeholderView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setDefaultTextAttributes:(NSDictionary *)defaultTextAttributes

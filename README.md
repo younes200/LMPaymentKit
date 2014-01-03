@@ -11,6 +11,20 @@ In short, PaymentKit should greatly simplify your life when dealing with iOS pay
 
 *For purchases related to the app, such as premium features, Apple's TOS require that you use their native In-App Purchase API. PaymentKits is only for purchasing products or services outside the app.*
 
+# Changes from stripe/PaymentKit
+
+* PKView can now be any size, with subviews laid out accordingly
+* Updated assets for all the different card types
+* UIResponder methods have been implemented
+* Fix for Diner's Club cards being unrecognised
+* Fix incorrect validation of AMEX CVC numbers
+* The look and feel of PKView has been updated to reflect the design of iOS 7
+* Lots of optimisations, cleanups and code modernization
+* A storyboard is now used in the example project
+* .gitignore is now useful!
+* PKView delegate is now notified when a field/state change occurs. This is useful for implementing helper labels
+* Can now set borderStyle of a PKView
+
 ## Installation
 
 ### Install with CocoaPods

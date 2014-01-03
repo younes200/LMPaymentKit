@@ -6,9 +6,7 @@
 //  Copyright (c) 2013 Stripe. All rights reserved.
 //
 
-#define RGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
-
-#define kPKRedColor RGB(253,0,17)
+#define kPKRedColor [UIColor colorWithRed:253.0/255.0 green:0.0 blue:17.0/255.0 alpha:1.0]
 
 #import <QuartzCore/QuartzCore.h>
 #import "PKView.h"
@@ -91,7 +89,7 @@
 	self.innerView = [[UIView alloc] initWithFrame:CGRectMake(_placeholderView.frame.size.width, 0, self.frame.size.width - _placeholderView.frame.size.width, self.frame.size.height)];
     self.innerView.clipsToBounds = YES;
 	
-	_cardLastFourField = [[UITextField alloc] initWithFrame:CGRectZero];
+	_cardLastFourField = [UITextField new];
 	_cardLastFourField.defaultTextAttributes = _defaultTextAttributes;
 	_cardLastFourField.backgroundColor = self.backgroundColor;
 	

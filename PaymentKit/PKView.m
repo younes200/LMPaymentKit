@@ -100,7 +100,7 @@
     [self setupCardCVCField];
 	
 	self.defaultTextAttributes = @{
-								   NSFontAttributeName: [UIFont boldSystemFontOfSize:16],
+								   NSFontAttributeName: [UIFont boldSystemFontOfSize:16.0],
 								   NSForegroundColorAttributeName: [UIColor blackColor]};
 	
     [self.innerView addSubview:_cardNumberField];
@@ -124,17 +124,18 @@
 {
 	_defaultTextAttributes = [defaultTextAttributes copy];
 	
-	_cardNumberField.defaultTextAttributes = _defaultTextAttributes;
-	_cardNumberField.textAlignment = NSTextAlignmentLeft;
+	// We shouldn't need to set the font and textColor attributes, but a bug exists in 7.0 (fixed in 7.1/)
 	
-	_cardExpiryField.defaultTextAttributes = _defaultTextAttributes;
+	NSArray *textFields = @[_cardNumberField, _cardExpiryField, _cardCVCField, _cardLastFourField];
+    for (PKTextField *textField in textFields) {
+		textField.defaultTextAttributes = _defaultTextAttributes;
+		textField.font = _defaultTextAttributes[NSFontAttributeName];
+		textField.textColor = _defaultTextAttributes[NSForegroundColorAttributeName];
+		textField.textAlignment = NSTextAlignmentLeft;
+    }
+
 	_cardExpiryField.textAlignment = NSTextAlignmentCenter;
-	
-	_cardCVCField.defaultTextAttributes = _defaultTextAttributes;
 	_cardCVCField.textAlignment = NSTextAlignmentCenter;
-	
-	_cardLastFourField.defaultTextAttributes = _defaultTextAttributes;
-	_cardLastFourField.textAlignment = NSTextAlignmentLeft;
 	
 	[self setNeedsLayout];
 }

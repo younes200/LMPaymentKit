@@ -8,10 +8,7 @@
 
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
 
-#define kPKDarkGreyColor [UIColor blackColor]
 #define kPKRedColor RGB(253,0,17)
-#define kPKDefaultBoldFont [UIFont boldSystemFontOfSize:16]
-#define kPKViewPlaceholderViewAnimationDuration 0.25
 
 #import <QuartzCore/QuartzCore.h>
 #import "PKView.h"
@@ -49,7 +46,7 @@
 
 @implementation PKView
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -95,12 +92,16 @@
     self.innerView.clipsToBounds = YES;
 	
 	_cardLastFourField = [[UITextField alloc] initWithFrame:CGRectZero];
-	_cardLastFourField.font = kPKDefaultBoldFont;
+	_cardLastFourField.defaultTextAttributes = _defaultTextAttributes;
 	_cardLastFourField.backgroundColor = self.backgroundColor;
 	
     [self setupCardNumberField];
     [self setupCardExpiryField];
     [self setupCardCVCField];
+	
+	self.defaultTextAttributes = @{
+								   NSFontAttributeName: [UIFont boldSystemFontOfSize:16],
+								   NSForegroundColorAttributeName: [UIColor blackColor]};
 	
     [self.innerView addSubview:_cardNumberField];
 	
@@ -120,6 +121,25 @@
     _placeholderView.backgroundColor = [UIColor clearColor];
 }
 
+- (void)setDefaultTextAttributes:(NSDictionary *)defaultTextAttributes
+{
+	_defaultTextAttributes = [defaultTextAttributes copy];
+	
+	_cardNumberField.defaultTextAttributes = _defaultTextAttributes;
+	_cardNumberField.textAlignment = NSTextAlignmentLeft;
+	
+	_cardExpiryField.defaultTextAttributes = _defaultTextAttributes;
+	_cardExpiryField.textAlignment = NSTextAlignmentCenter;
+	
+	_cardCVCField.defaultTextAttributes = _defaultTextAttributes;
+	_cardCVCField.textAlignment = NSTextAlignmentCenter;
+	
+	_cardLastFourField.defaultTextAttributes = _defaultTextAttributes;
+	_cardLastFourField.textAlignment = NSTextAlignmentLeft;
+	
+	[self setNeedsLayout];
+}
+
 - (PKTextField *)textFieldWithPlaceholder:(NSString *)placeholder
 {
 	PKTextField *textField = [PKTextField new];
@@ -127,8 +147,7 @@
 	textField.delegate = self;
     textField.placeholder = placeholder;
     textField.keyboardType = UIKeyboardTypeNumberPad;
-    textField.textColor = kPKDarkGreyColor;
-    textField.font = kPKDefaultBoldFont;
+    textField.defaultTextAttributes = _defaultTextAttributes;
 	textField.layer.masksToBounds = NO;
 	
 	return textField;
@@ -141,22 +160,20 @@
 
 - (void)setupCardExpiryField
 {
-	_cardExpiryField = [self textFieldWithPlaceholder:@"MM/YY"];
-	_cardExpiryField.textAlignment = NSTextAlignmentCenter;
-	
 	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, -6.0, 0.5, _innerView.frame.size.height)];
 	line.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.3];
+	
+	_cardExpiryField = [self textFieldWithPlaceholder:@"MM/YY"];
 	_cardExpiryField.leftView = line;
 	_cardExpiryField.leftViewMode = UITextFieldViewModeAlways;
 }
 
 - (void)setupCardCVCField
 {
-	_cardCVCField = [self textFieldWithPlaceholder:@"CVC"];
-	_cardCVCField.textAlignment = NSTextAlignmentCenter;
-	
 	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, -6.0, 0.5, _innerView.frame.size.height)];
 	line.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.3];
+	
+	_cardCVCField = [self textFieldWithPlaceholder:@"CVC"];
 	_cardCVCField.leftView = line;
 	_cardCVCField.leftViewMode = UITextFieldViewModeAlways;
 }
@@ -182,7 +199,7 @@
 {
 	_placeholderView.frame = CGRectMake(0, (self.frame.size.height - 32) / 2, 51, 32);
 	
-	NSDictionary *attributes = @{NSFontAttributeName:kPKDefaultBoldFont};
+	NSDictionary *attributes = self.defaultTextAttributes;
 	
 	CGSize lastGroupSize, cvcSize, cardNumberSize;
 	
@@ -218,7 +235,7 @@
 	
 	CGFloat lastGroupSidePadding = (newLastGroupWidth - lastGroupSize.width) / 2.0;
 	
-	_cardNumberField.frame   = CGRectMake((innerWidth / 2.0) - (cardNumberSize.width / 2.0),
+	  _cardNumberField.frame = CGRectMake((innerWidth / 2.0) - (cardNumberSize.width / 2.0),
 										  textFieldY,
 										  cardNumberSize.width,
 										  cardNumberSize.height);
@@ -228,17 +245,17 @@
 										  lastGroupSize.width,
 										  lastGroupSize.height);
 	
-	_cardExpiryField.frame   = CGRectMake(CGRectGetMaxX(_cardNumberField.frame) + lastGroupSidePadding,
+	  _cardExpiryField.frame = CGRectMake(CGRectGetMaxX(_cardNumberField.frame) + lastGroupSidePadding,
 										  textFieldY,
 										  newExpiryWidth,
 										  expirySize.height);
-	
-	_cardCVCField.frame      = CGRectMake(CGRectGetMaxX(_cardExpiryField.frame),
+
+	     _cardCVCField.frame = CGRectMake(CGRectGetMaxX(_cardExpiryField.frame),
 										  textFieldY,
 										  newCVCWidth,
 										  cvcSize.height);
 	
-	_innerView.frame         = CGRectMake(_innerView.frame.origin.x,
+	        _innerView.frame = CGRectMake(_innerView.frame.origin.x,
 										  0.0,
 										  CGRectGetMaxX(_cardCVCField.frame),
 										  _innerView.frame.size.height);
@@ -339,15 +356,15 @@
 {
     if (![_placeholderView.image isEqual:image]) {
         __block __unsafe_unretained UIView *previousPlaceholderView = _placeholderView;
-        [UIView animateWithDuration:kPKViewPlaceholderViewAnimationDuration delay:0
+        [UIView animateWithDuration:0.25 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^
-         {
-             _placeholderView.layer.opacity = 0.0;
-             _placeholderView.layer.transform = CATransform3DMakeScale(1.2, 1.2, 1.2);
-         } completion:^(BOOL finished) {
-             [previousPlaceholderView removeFromSuperview];
-         }];
+                         animations:^{
+							 _placeholderView.layer.opacity = 0.0;
+							 _placeholderView.layer.transform = CATransform3DMakeScale(1.2, 1.2, 1.2);
+						 } completion:^(BOOL finished) {
+							 [previousPlaceholderView removeFromSuperview];
+						 }];
+		
         _placeholderView = nil;
         
         [self setupPlaceholderView];
@@ -355,13 +372,12 @@
         _placeholderView.layer.opacity = 0.0;
         _placeholderView.layer.transform = CATransform3DMakeScale(0.8, 0.8, 0.8);
         [self insertSubview:_placeholderView belowSubview:previousPlaceholderView];
-        [UIView animateWithDuration:kPKViewPlaceholderViewAnimationDuration delay:0
+        [UIView animateWithDuration:0.25 delay:0
                             options:UIViewAnimationOptionCurveEaseInOut
-                         animations:^
-         {
-             _placeholderView.layer.opacity = 1.0;
-             _placeholderView.layer.transform = CATransform3DIdentity;
-         } completion:^(BOOL finished) {}];
+                         animations:^{
+							 _placeholderView.layer.opacity = 1.0;
+							 _placeholderView.layer.transform = CATransform3DIdentity;
+						 } completion:^(BOOL finished) {}];
     }
 }
 
@@ -471,10 +487,8 @@
     if ([cardNumber isValid]) {
         [self textFieldIsValid:_cardNumberField];
         [self stateMeta];
-        
     } else if ([cardNumber isValidLength] && ![cardNumber isValidLuhn]) {
         [self textFieldIsInvalid:_cardNumberField withErrors:YES];
-        
     } else if (![cardNumber isValidLength]) {
         [self textFieldIsInvalid:_cardNumberField withErrors:NO];
     }
@@ -488,7 +502,9 @@
     resultString = [PKTextField textByRemovingUselessSpacesFromString:resultString];
     PKCardExpiry *cardExpiry = [PKCardExpiry cardExpiryWithString:resultString];
     
-    if (![cardExpiry isPartiallyValid]) return NO;
+    if (![cardExpiry isPartiallyValid]) {
+		return NO;
+	}
     
     // Only support shorthand year
     if ([cardExpiry formattedString].length > 5) return NO;
@@ -502,7 +518,6 @@
     if ([cardExpiry isValid]) {
         [self textFieldIsValid:_cardExpiryField];
         [self stateCardCVC];
-        
     } else if ([cardExpiry isValidLength] && ![cardExpiry isValidDate]) {
         [self textFieldIsInvalid:_cardExpiryField withErrors:YES];
     } else if (![cardExpiry isValidLength]) {
@@ -520,7 +535,9 @@
     PKCardType cardType = [[PKCardNumber cardNumberWithString:_cardNumberField.text] cardType];
     
     // Restrict length
-    if ( ![cardCVC isPartiallyValidWithType:cardType] ) return NO;
+    if (![cardCVC isPartiallyValidWithType:cardType]) {
+		return NO;
+	}
     
     // Strip non-digits
     _cardCVCField.text = [cardCVC string];
@@ -544,7 +561,6 @@
         if ([self.delegate respondsToSelector:@selector(paymentView:withCard:isValid:)]) {
             [self.delegate paymentView:self withCard:self.card isValid:YES];
         }
-        
     } else if (![self isValid] && isValidState) {
         isValidState = NO;
         
@@ -555,7 +571,7 @@
 }
 
 - (void)textFieldIsValid:(UITextField *)textField {
-    textField.textColor = kPKDarkGreyColor;
+    textField.textColor = _defaultTextAttributes[NSForegroundColorAttributeName];
     [self checkValid];
 }
 
@@ -563,7 +579,7 @@
     if (errors) {
         textField.textColor = kPKRedColor;
     } else {
-        textField.textColor = kPKDarkGreyColor;
+        textField.textColor = _defaultTextAttributes[NSForegroundColorAttributeName];;
     }
 	
     [self checkValid];
@@ -585,20 +601,24 @@
 
 - (PKTextField *)firstInvalidField;
 {
-    if (![[PKCardNumber cardNumberWithString:self.cardNumberField.text] isValid])
+    if (![[PKCardNumber cardNumberWithString:self.cardNumberField.text] isValid]) {
         return self.cardNumberField;
-    else if (![[PKCardExpiry cardExpiryWithString:self.cardExpiryField.text] isValid])
+	}
+    else if (![[PKCardExpiry cardExpiryWithString:self.cardExpiryField.text] isValid]) {
         return self.cardExpiryField;
-    else if (![[PKCardCVC cardCVCWithString:self.cardCVCField.text] isValid])
+	}
+    else if (![[PKCardCVC cardCVCWithString:self.cardCVCField.text] isValid]) {
         return self.cardCVCField;
+	}
     
     return nil;
 }
 
 - (PKTextField *)nextFirstResponder;
 {
-    if (self.firstInvalidField)
+    if (self.firstInvalidField) {
         return self.firstInvalidField;
+	}
     
     return self.cardCVCField;
 }

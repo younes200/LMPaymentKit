@@ -33,6 +33,7 @@ typedef enum {
 - (BOOL)isValid;
 
 @property(nonatomic) UITextBorderStyle borderStyle;
+@property(nonatomic, copy) NSDictionary *defaultTextAttributes;
 
 @property (nonatomic, readonly) UIView *opaqueOverGradientView;
 @property (nonatomic, readonly) PKCardNumber *cardNumber;

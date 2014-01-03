@@ -12,11 +12,11 @@
 
 @property (nonatomic, readonly) NSUInteger month;
 @property (nonatomic, readonly) NSUInteger year;
-@property (nonatomic, readonly) NSString* formattedString;
-@property (nonatomic, readonly) NSString* formattedStringWithTrail;
+@property (nonatomic, readonly) NSString *formattedString;
+@property (nonatomic, readonly) NSString *formattedStringWithTrail;
 
-+ (id)cardExpiryWithString:(NSString *)string;
-- (id)initWithString:(NSString *)string;
++ (instancetype)cardExpiryWithString:(NSString *)string;
+- (instancetype)initWithString:(NSString *)string;
 - (NSString *)formattedString;
 - (NSString *)formattedStringWithTrail;
 - (BOOL)isValid;

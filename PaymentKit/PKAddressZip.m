@@ -10,12 +10,12 @@
 
 @implementation PKAddressZip
 
-+ (id)addressZipWithString:(NSString *)string
++ (instancetype)addressZipWithString:(NSString *)string
 {
     return [[self alloc] initWithString:string];
 }
 
-- (id)initWithString:(NSString *)string
+- (instancetype)initWithString:(NSString *)string
 {
     self = [super init];
     if (self) {
@@ -29,7 +29,7 @@
     return zip;
 }
 
-- (BOOL) isValid
+- (BOOL)isValid
 {
     NSString* stripped = [zip stringByReplacingOccurrencesOfString:@"\\s"
                                             withString:@""

@@ -12,7 +12,7 @@
 
 @synthesize number, cvc, expMonth, expYear, addressZip;
 
-- (NSString*)last4
+- (NSString *)last4
 {
     if (number.length >= 4) {
         return [number substringFromIndex:([number length] - 4)];

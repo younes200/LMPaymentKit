@@ -10,7 +10,7 @@
 
 @implementation PKUSAddressZip
 
-- (id)initWithString:(NSString *)string
+- (instancetype)initWithString:(NSString *)string
 {
     self = [super init];
     if (self) {
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (BOOL) isValid
+- (BOOL)isValid
 {
     return zip.length == 5;
 }

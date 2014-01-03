@@ -17,38 +17,40 @@
 
 @implementation PKCardExpiry
 
-+ (id) cardExpiryWithString:(NSString *)string
++ (instancetype)cardExpiryWithString:(NSString *)string
 {
     return [[self alloc] initWithString:string];
 }
 
-- (id) initWithString:(NSString *)string
+- (instancetype)initWithString:(NSString *)string
 {
-    if ( !string ) {
+    if (!string) {
         return [self initWithMonth:@"" andYear:@""];
     }
     
-    NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"^(\\d{1,2})?[\\s/]*(\\d{1,4})?" options:0 error:NULL];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(\\d{1,2})?[\\s/]*(\\d{1,4})?" options:0 error:NULL];
 
-    NSTextCheckingResult* match = [regex firstMatchInString:string options:0 range:NSMakeRange(0, string.length)];
+    NSTextCheckingResult *match = [regex firstMatchInString:string options:0 range:NSMakeRange(0, string.length)];
 
-    NSString* monthStr = [NSString string];
-    NSString* yearStr  = [NSString string];
+    NSString *monthStr = [NSString string];
+    NSString *yearStr  = [NSString string];
     
     if (match) {
         NSRange monthRange = [match rangeAtIndex:1];
-        if (monthRange.length > 0)
+        if (monthRange.length > 0) {
             monthStr = [string substringWithRange:monthRange];
+		}
         
         NSRange yearRange  = [match rangeAtIndex:2];
-        if (yearRange.length > 0)
+        if (yearRange.length > 0) {
             yearStr = [string substringWithRange:yearRange];
+		}
     }
     
     return [self initWithMonth:monthStr andYear:yearStr];
 }
 
-- (id) initWithMonth:(NSString*)monthStr andYear:(NSString*)yearStr
+- (instancetype)initWithMonth:(NSString *)monthStr andYear:(NSString *)yearStr
 {
     self = [super init];
     if (self) {
@@ -66,8 +68,9 @@
 
 - (NSString *)formattedString
 {
-    if (year.length > 0)
+    if (year.length > 0) {
         return [NSString stringWithFormat:@"%@/%@", month, year];
+	}
 
     return [NSString stringWithFormat:@"%@", month];    
 }
@@ -93,9 +96,11 @@
 
 - (BOOL)isValidDate
 {
-    if ([self month] <= 0 || [self month] > 12) return false;
+    if ([self month] <= 0 || [self month] > 12) {
+		return false;
+	}
     
-    NSDate* now = [NSDate date];
+    NSDate *now = [NSDate date];
     return [[self expiryDate] compare:now] == NSOrderedDescending;
 }
 
@@ -108,14 +113,16 @@
     }
 }
 
-- (NSDate*)expiryDate
+- (NSDate *)expiryDate
 {
     NSDateComponents *comps = [[NSDateComponents alloc] init];
+	
     [comps setDay:1];    
     [comps setMonth:[self month]];
     [comps setYear:[self year]];
     
     static NSCalendar *gregorian = nil;
+	
     if (!gregorian) {
         gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     }
@@ -125,15 +132,19 @@
 
 - (NSUInteger)month
 {
-    if (!month) return 0;
+    if (!month) {
+		return 0;
+	}
     return [month integerValue];
 }
 
 - (NSUInteger)year
 {
-    if (!year) return 0;
+    if (!year) {
+		return 0;
+	}
     
-    NSString* yearStr = [NSString stringWithString:year];
+    NSString *yearStr = [NSString stringWithString:year];
     
     if (yearStr.length == 2) {
         static NSDateFormatter *formatter = nil;
@@ -142,7 +153,7 @@
             [formatter setDateFormat:@"yyyy"];
         }
 
-        NSString* prefix = [formatter stringFromDate:[NSDate date]];
+        NSString *prefix = [formatter stringFromDate:[NSDate date]];
         prefix = [prefix substringWithRange:NSMakeRange(0, 2)];
         yearStr = [NSString stringWithFormat:@"%@%@", prefix, yearStr];
     }

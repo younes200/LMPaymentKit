@@ -12,14 +12,14 @@
 @interface PKCardNumber : NSObject
 
 @property (nonatomic, readonly) PKCardType cardType;
-@property (nonatomic, readonly) NSString * last4;
-@property (nonatomic, readonly) NSString * lastGroup;
-@property (nonatomic, readonly) NSString * string;
-@property (nonatomic, readonly) NSString * formattedString;
-@property (nonatomic, readonly) NSString * formattedStringWithTrail;
+@property (nonatomic, readonly) NSString *last4;
+@property (nonatomic, readonly) NSString *lastGroup;
+@property (nonatomic, readonly) NSString *string;
+@property (nonatomic, readonly) NSString *formattedString;
+@property (nonatomic, readonly) NSString *formattedStringWithTrail;
 
-+ (id) cardNumberWithString:(NSString *)string;
-- (id) initWithString:(NSString *)string;
++ (instancetype)cardNumberWithString:(NSString *)string;
+- (instancetype)initWithString:(NSString *)string;
 - (PKCardType)cardType;
 - (NSString *)last4;
 - (NSString *)lastGroup;

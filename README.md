@@ -24,6 +24,7 @@ In short, PaymentKit should greatly simplify your life when dealing with iOS pay
 * .gitignore is now useful!
 * PKView delegate is now notified when a field/state change occurs. This is useful for implementing helper labels
 * Can now set borderStyle of a PKView
+* Can now set the defaultTextAttributes of a PKView
 
 ## Installation
 

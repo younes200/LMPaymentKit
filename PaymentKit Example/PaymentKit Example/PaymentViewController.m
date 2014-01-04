@@ -22,6 +22,23 @@
     self.navigationItem.rightBarButtonItem.enabled = valid;
 }
 
+- (void)paymentView:(PKView *)paymentView didChangeState:(PKViewState)state
+{
+	switch (state) {
+		case PKViewStateCardNumber:
+			self.helpLabel.text = @"Enter card number";
+			break;
+			
+		case PKViewStateExpiry:
+			self.helpLabel.text = @"Enter expiry date";
+			break;
+			
+		case PKViewStateCVC:
+			self.helpLabel.text = @"Enter security code";
+			break;
+	}
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

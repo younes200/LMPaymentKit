@@ -14,6 +14,7 @@
 {
     [super viewDidLoad];
     self.paymentView.delegate = self;
+	[self.paymentView becomeFirstResponder];
 }
 
 - (void)paymentView:(PKView *)paymentView withCard:(PKCard *)card isValid:(BOOL)valid

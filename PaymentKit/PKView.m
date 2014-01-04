@@ -293,7 +293,9 @@
                          }];
     }
     
-    [self.cardNumberField becomeFirstResponder];
+	if (self.isFirstResponder) {
+    	[self.cardNumberField becomeFirstResponder];
+	}
 }
 
 - (void)stateMeta

@@ -13,6 +13,7 @@
 #import "PKTextField.h"
 
 @interface PKView () <UITextFieldDelegate> {
+	
 @private
     BOOL isInitialState;
     BOOL isValidState;
@@ -75,6 +76,52 @@
 	}
 }
 
+- (void)setDefaultTextAttributes:(NSDictionary *)defaultTextAttributes
+{
+	_defaultTextAttributes = [defaultTextAttributes copy];
+	
+	// We shouldn't need to set the font and textColor attributes, but a bug exists in 7.0 (fixed in 7.1/)
+	
+	NSArray *textFields = @[_cardNumberField, _cardExpiryField, _cardCVCField, _cardLastFourField];
+    for (PKTextField *textField in textFields) {
+		textField.defaultTextAttributes = _defaultTextAttributes;
+		textField.font = _defaultTextAttributes[NSFontAttributeName];
+		textField.textColor = _defaultTextAttributes[NSForegroundColorAttributeName];
+		textField.textAlignment = NSTextAlignmentLeft;
+    }
+	
+	_cardExpiryField.textAlignment = NSTextAlignmentCenter;
+	_cardCVCField.textAlignment = NSTextAlignmentCenter;
+	
+	[self setNeedsLayout];
+}
+
+- (void)setFont:(UIFont *)font
+{
+	NSMutableDictionary *defaultTextAttributes = [self.defaultTextAttributes mutableCopy];
+	defaultTextAttributes[NSFontAttributeName] = font;
+	
+	self.defaultTextAttributes = [defaultTextAttributes copy];
+}
+
+- (UIFont *)font
+{
+	return self.defaultTextAttributes[NSFontAttributeName];
+}
+
+- (void)setTextColor:(UIColor *)textColor
+{
+	NSMutableDictionary *defaultTextAttributes = [self.defaultTextAttributes mutableCopy];
+	defaultTextAttributes[NSForegroundColorAttributeName] = textColor;
+	
+	self.defaultTextAttributes = [defaultTextAttributes copy];
+}
+
+- (UIColor *)textColor
+{
+	return self.defaultTextAttributes[NSForegroundColorAttributeName];
+}
+
 - (void)setup
 {
 	self.borderStyle = UITextBorderStyleRoundedRect;
@@ -113,31 +160,6 @@
     [self stateCardNumber];
 }
 
-- (void)setupPlaceholderView
-{
-    _placeholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder"]];
-}
-
-- (void)setDefaultTextAttributes:(NSDictionary *)defaultTextAttributes
-{
-	_defaultTextAttributes = [defaultTextAttributes copy];
-	
-	// We shouldn't need to set the font and textColor attributes, but a bug exists in 7.0 (fixed in 7.1/)
-	
-	NSArray *textFields = @[_cardNumberField, _cardExpiryField, _cardCVCField, _cardLastFourField];
-    for (PKTextField *textField in textFields) {
-		textField.defaultTextAttributes = _defaultTextAttributes;
-		textField.font = _defaultTextAttributes[NSFontAttributeName];
-		textField.textColor = _defaultTextAttributes[NSForegroundColorAttributeName];
-		textField.textAlignment = NSTextAlignmentLeft;
-    }
-
-	_cardExpiryField.textAlignment = NSTextAlignmentCenter;
-	_cardCVCField.textAlignment = NSTextAlignmentCenter;
-	
-	[self setNeedsLayout];
-}
-
 - (PKTextField *)textFieldWithPlaceholder:(NSString *)placeholder
 {
 	PKTextField *textField = [PKTextField new];
@@ -149,6 +171,11 @@
 	textField.layer.masksToBounds = NO;
 	
 	return textField;
+}
+
+- (void)setupPlaceholderView
+{
+    _placeholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder"]];
 }
 
 - (void)setupCardNumberField
@@ -211,14 +238,14 @@
 			cardNumberSize = [@"1234 567890 1234" sizeWithAttributes:attributes];
 		}
 		else {
-			cardNumberSize = [@"1234 5678 9012 3456" sizeWithAttributes:attributes];
+			cardNumberSize = [_cardNumberField.placeholder sizeWithAttributes:attributes];
 		}
 		
 		lastGroupSize = [@"0000" sizeWithAttributes:attributes];
-		cvcSize = [@"CVC" sizeWithAttributes:attributes];
+		cvcSize = [_cardCVCField.placeholder sizeWithAttributes:attributes];
 	}
 	
-	CGSize expirySize = [@"MM/YY" sizeWithAttributes:attributes];
+	CGSize expirySize = [_cardExpiryField.placeholder sizeWithAttributes:attributes];
 	
 	CGFloat textFieldY = (self.frame.size.height - lastGroupSize.height) / 2.0;
 	

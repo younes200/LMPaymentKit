@@ -33,6 +33,8 @@ typedef enum {
 - (BOOL)isValid;
 
 @property(nonatomic) UITextBorderStyle borderStyle;
+@property(nonatomic) UIFont *font;
+@property(nonatomic) UIColor *textColor;
 @property(nonatomic, copy) NSDictionary *defaultTextAttributes;
 
 @property (nonatomic, readonly) UIView *opaqueOverGradientView;

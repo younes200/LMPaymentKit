@@ -124,6 +124,7 @@
 
 - (void)setup
 {
+	self.imageStyle = PKViewImageStyleNormal;
 	self.borderStyle = UITextBorderStyleRoundedRect;
 	self.layer.masksToBounds = YES;
 	self.backgroundColor = [UIColor whiteColor];
@@ -133,7 +134,7 @@
     
     [self setupPlaceholderView];
 	
-	self.innerView = [[UIView alloc] initWithFrame:CGRectMake(_placeholderView.frame.size.width, 0, self.frame.size.width - _placeholderView.frame.size.width, self.frame.size.height)];
+	self.innerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, self.frame.size.height)];
     self.innerView.clipsToBounds = YES;
 	
 	_cardLastFourField = [UITextField new];
@@ -153,9 +154,11 @@
     [self addSubview:self.innerView];
     [self addSubview:_placeholderView];
     
-	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(_placeholderView.frame.size.width - 0.5, 0, 0.5,  _innerView.frame.size.height)];
-	line.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.3];
-	[self addSubview:line];
+	if (self.imageStyle == PKViewImageStyleNormal) {
+		UIView *line = [[UIView alloc] initWithFrame:CGRectMake(_placeholderView.frame.size.width - 0.5, 0, 0.5,  _innerView.frame.size.height)];
+		line.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.3];
+		[self addSubview:line];
+	}
 	
     [self stateCardNumber];
 }
@@ -176,6 +179,7 @@
 - (void)setupPlaceholderView
 {
     _placeholderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"placeholder"]];
+	_placeholderView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setupCardNumberField
@@ -222,7 +226,17 @@
 
 - (void)layoutSubviews
 {
-	_placeholderView.frame = CGRectMake(0, (self.frame.size.height - 32) / 2, 51, 32);
+	if (self.imageStyle == PKViewImageStyleOutline) {
+		CGFloat height = 18;
+		CGFloat y = (self.frame.size.height - height) / 2;
+		CGFloat width = 25 + y;
+		
+		_placeholderView.frame = CGRectMake(0, y, width, height);
+		_placeholderView.contentMode = UIViewContentModeRight;
+	}
+	else {
+		_placeholderView.frame = CGRectMake(0, (self.frame.size.height - 32) / 2, 51, 32);
+	}
 	
 	NSDictionary *attributes = self.defaultTextAttributes;
 	
@@ -280,10 +294,19 @@
 										  newCVCWidth,
 										  cvcSize.height);
 	
-	        _innerView.frame = CGRectMake(_innerView.frame.origin.x,
+	CGFloat x;
+	
+	if (isInitialState) {
+		x = _placeholderView.frame.size.width;
+	}
+	else {
+		x = _innerView.frame.origin.x;
+	}
+	
+	        _innerView.frame = CGRectMake(x,
 										  0.0,
 										  CGRectGetMaxX(_cardCVCField.frame),
-										  _innerView.frame.size.height);
+										  self.frame.size.height);
 }
 
 // State
@@ -448,6 +471,10 @@
         default:
             break;
     }
+	
+	if (self.imageStyle == PKViewImageStyleOutline) {
+		cardTypeName = [NSString stringWithFormat:@"%@-outline", cardTypeName];
+	}
 	
     [self setPlaceholderViewImage:[UIImage imageNamed:cardTypeName]];
 }

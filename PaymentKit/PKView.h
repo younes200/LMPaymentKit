@@ -22,6 +22,11 @@ typedef enum {
 	PKViewStateCVC
 } PKViewState;
 
+typedef enum {
+	PKViewImageStyleNormal,
+    PKViewImageStyleOutline
+} PKViewImageStyle;
+
 @protocol PKViewDelegate <NSObject>
 @optional
 - (void)paymentView:(PKView *)paymentView withCard:(PKCard *)card isValid:(BOOL)valid;
@@ -33,6 +38,7 @@ typedef enum {
 - (BOOL)isValid;
 
 @property(nonatomic) UITextBorderStyle borderStyle;
+@property(nonatomic) PKViewImageStyle imageStyle;
 @property(nonatomic) UIFont *font;
 @property(nonatomic) UIColor *textColor;
 @property(nonatomic, copy) NSDictionary *defaultTextAttributes;

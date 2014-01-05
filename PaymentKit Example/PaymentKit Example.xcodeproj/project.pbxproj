@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		161409A31871300900387BB8 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 161409A21871300900387BB8 /* Storyboard.storyboard */; };
+		16B159AF187A0376000D3033 /* amex-outline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16B159AE187A0376000D3033 /* amex-outline@2x.png */; };
+		16B159B1187A0385000D3033 /* jcb-outline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16B159B0187A0385000D3033 /* jcb-outline@2x.png */; };
+		16B159B3187A038A000D3033 /* mastercard-outline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16B159B2187A038A000D3033 /* mastercard-outline@2x.png */; };
+		16B159B5187A0390000D3033 /* placeholder-outline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16B159B4187A0390000D3033 /* placeholder-outline@2x.png */; };
+		16B159B7187A0395000D3033 /* visa-outline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16B159B6187A0395000D3033 /* visa-outline@2x.png */; };
 		16F373391875698F00290ABF /* diners@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16F373381875698F00290ABF /* diners@2x.png */; };
 		16F3733B18756A5F00290ABF /* jcb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16F3733A18756A5F00290ABF /* jcb@2x.png */; };
 		4C332B4E16FA923E009C782D /* PKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C332B4D16FA923E009C782D /* PKTextField.m */; };
@@ -62,6 +67,11 @@
 
 /* Begin PBXFileReference section */
 		161409A21871300900387BB8 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		16B159AE187A0376000D3033 /* amex-outline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "amex-outline@2x.png"; sourceTree = "<group>"; };
+		16B159B0187A0385000D3033 /* jcb-outline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jcb-outline@2x.png"; sourceTree = "<group>"; };
+		16B159B2187A038A000D3033 /* mastercard-outline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mastercard-outline@2x.png"; sourceTree = "<group>"; };
+		16B159B4187A0390000D3033 /* placeholder-outline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder-outline@2x.png"; sourceTree = "<group>"; };
+		16B159B6187A0395000D3033 /* visa-outline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visa-outline@2x.png"; sourceTree = "<group>"; };
 		16F373381875698F00290ABF /* diners@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "diners@2x.png"; sourceTree = "<group>"; };
 		16F3733A18756A5F00290ABF /* jcb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jcb@2x.png"; sourceTree = "<group>"; };
 		4C332B4C16FA923E009C782D /* PKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKTextField.h; sourceTree = "<group>"; };
@@ -281,6 +291,7 @@
 			children = (
 				FAA360F616C9F21C00049C6F /* amex.png */,
 				FAA360F716C9F21C00049C6F /* amex@2x.png */,
+				16B159AE187A0376000D3033 /* amex-outline@2x.png */,
 				FAA360F816C9F21C00049C6F /* cvc-amex.png */,
 				FAA360F916C9F21C00049C6F /* cvc-amex@2x.png */,
 				FAA360FA16C9F21C00049C6F /* cvc.png */,
@@ -291,12 +302,16 @@
 				FAA360FF16C9F21C00049C6F /* discover@2x.png */,
 				FAA3610016C9F21C00049C6F /* jcb.png */,
 				16F3733A18756A5F00290ABF /* jcb@2x.png */,
+				16B159B0187A0385000D3033 /* jcb-outline@2x.png */,
 				FAA3610216C9F21C00049C6F /* mastercard.png */,
 				FAA3610316C9F21C00049C6F /* mastercard@2x.png */,
+				16B159B2187A038A000D3033 /* mastercard-outline@2x.png */,
 				FAA3610416C9F21C00049C6F /* placeholder.png */,
 				FAA3610516C9F21C00049C6F /* placeholder@2x.png */,
+				16B159B4187A0390000D3033 /* placeholder-outline@2x.png */,
 				FAA3610616C9F21C00049C6F /* visa.png */,
 				FAA3610716C9F21C00049C6F /* visa@2x.png */,
+				16B159B6187A0395000D3033 /* visa-outline@2x.png */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -371,13 +386,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16B159B1187A0385000D3033 /* jcb-outline@2x.png in Resources */,
+				16B159AF187A0376000D3033 /* amex-outline@2x.png in Resources */,
 				FA45AC7B16AE350D0003A41D /* InfoPlist.strings in Resources */,
 				FA45AC8316AE350D0003A41D /* Default.png in Resources */,
 				FA45AC8516AE350D0003A41D /* Default@2x.png in Resources */,
 				FA45AC8716AE350E0003A41D /* Default-568h@2x.png in Resources */,
 				FAA3610816C9F21C00049C6F /* amex.png in Resources */,
 				FAA3610916C9F21C00049C6F /* amex@2x.png in Resources */,
+				16B159B7187A0395000D3033 /* visa-outline@2x.png in Resources */,
 				FAA3610A16C9F21C00049C6F /* cvc-amex.png in Resources */,
+				16B159B3187A038A000D3033 /* mastercard-outline@2x.png in Resources */,
 				16F373391875698F00290ABF /* diners@2x.png in Resources */,
 				161409A31871300900387BB8 /* Storyboard.storyboard in Resources */,
 				16F3733B18756A5F00290ABF /* jcb@2x.png in Resources */,
@@ -389,6 +408,7 @@
 				FAA3611116C9F21C00049C6F /* discover@2x.png in Resources */,
 				FAA3611216C9F21C00049C6F /* jcb.png in Resources */,
 				FAA3611416C9F21C00049C6F /* mastercard.png in Resources */,
+				16B159B5187A0390000D3033 /* placeholder-outline@2x.png in Resources */,
 				FAA3611516C9F21C00049C6F /* mastercard@2x.png in Resources */,
 				FAA3611616C9F21C00049C6F /* placeholder.png in Resources */,
 				FAA3611716C9F21C00049C6F /* placeholder@2x.png in Resources */,

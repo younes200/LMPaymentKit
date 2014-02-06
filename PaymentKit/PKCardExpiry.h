@@ -17,6 +17,8 @@
 
 + (instancetype)cardExpiryWithString:(NSString *)string;
 - (instancetype)initWithString:(NSString *)string;
+- (instancetype)initWithMonth:(NSString *)monthStr andYear:(NSString *)yearStr;
+
 - (NSString *)formattedString;
 - (NSString *)formattedStringWithTrail;
 - (BOOL)isValid;

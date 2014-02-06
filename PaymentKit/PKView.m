@@ -45,6 +45,8 @@
 
 @implementation PKView
 
+@dynamic card;
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -400,6 +402,27 @@
     card.expYear    = [self.cardExpiry year];
     
     return card;
+}
+
+-(void) setCard:(PKCard *)card {
+    [self reset];
+    PKCardNumber *number = [[PKCardNumber alloc] initWithString:card.number];
+    self.cardNumberField.text = [number formattedString];
+    [self setPlaceholderToCardType];
+    
+    NSString *month = [NSString stringWithFormat:@"%02d", (int)card.expMonth];
+    NSString *year = [[NSString stringWithFormat:@"%lu", (unsigned long)card.expYear] substringFromIndex:2];
+    
+    self.cardExpiryField.text = [NSString stringWithFormat:@"%@/%@", month, year];
+    self.cardCVCField.text = card.cvc;
+    [self stateMeta];
+    [self.cardExpiryField resignFirstResponder];
+}
+
+-(void) reset {
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self setup];
+    [self layoutSubviews];
 }
 
 - (void)setPlaceholderViewImage:(UIImage *)image

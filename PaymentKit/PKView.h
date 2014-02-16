@@ -57,6 +57,6 @@ typedef enum {
 @property PKTextField *cardCVCField;
 @property UIImageView *placeholderView;
 @property (weak) id <PKViewDelegate> delegate;
-@property (readonly) PKCard *card;
+@property (retain) PKCard *card;
 
 @end
